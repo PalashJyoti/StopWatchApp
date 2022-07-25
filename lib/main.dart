@@ -4,9 +4,14 @@ import 'package:flutter/services.dart';
 import 'package:stopwatch/watch.dart';
 
 void main() {
+  // for ios full screen splash screen
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
       overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top]);
+
+  // for android statusbar dark shadow removal
+  SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: Colors.white));
   runApp(const MyApp());
 }
 
