@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -61,33 +62,57 @@ class _MyAppState extends State<MyApp> {
           body: SafeArea(
             child: Column(
               children: [
-                const Expanded(
-                  child: Image(
-                    image: AssetImage('assets/image1.png'),
-                  ),
-                ),
+                // const Expanded(
+                //   flex: 2,
+                //   child: Image(
+                //     image: AssetImage('assets/image1.png'),
+                //   ),
+                // ),
                 Expanded(
+                  flex: 2,
                   child: Center(
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          width: 3,
-                          color: Colors.blueAccent,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 70),
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            width: 3,
+                            color: Colors.blueAccent,
+                          ),
                         ),
-                      ),
-                      child: Text(
-                        returnFormattedText(),
-                        style: const TextStyle(
-                          fontSize: 36,
-                          fontWeight: FontWeight.bold,
+                        child: Text(
+                          returnFormattedText(),
+                          style: const TextStyle(
+                            fontSize: 44,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
                 Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.all(30),
+                      child: ListView.builder(
+                          itemCount: 10,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ListTile(
+                              leading: Text(
+                                '${index + 1}'.padLeft(2, "0"),
+                                style: const TextStyle(
+                                  color: Colors.blueAccent,
+                                ),
+                              ),
+                              trailing: const Text('something'),
+                            );
+                          }),
+                    )),
+                Expanded(
+                  flex: 1,
                   child: Row(
                     children: [
                       Expanded(
@@ -103,7 +128,16 @@ class _MyAppState extends State<MyApp> {
                                   size: 25,
                                 ),
                               )
-                            : Container(),
+                            : _isStarted
+                                ? GestureDetector(
+                                    onTap: null,
+                                    child: const Icon(
+                                      CupertinoIcons.restart,
+                                      color: Colors.grey,
+                                      size: 25,
+                                    ),
+                                  )
+                                : Container(),
                       ),
                       Expanded(
                         child: CupertinoButton(
@@ -143,7 +177,16 @@ class _MyAppState extends State<MyApp> {
                                   size: 25,
                                 ),
                               )
-                            : Container(),
+                            : _onPause
+                                ? GestureDetector(
+                                    onTap: null,
+                                    child: const Icon(
+                                      CupertinoIcons.flag,
+                                      color: Colors.grey,
+                                      size: 25,
+                                    ),
+                                  )
+                                : Container(),
                       ),
                     ],
                   ),
