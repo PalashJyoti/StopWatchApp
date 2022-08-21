@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,6 +31,8 @@ class _MyAppState extends State<MyApp> {
   bool _onPause = false;
   late Stopwatch stopwatch;
   late Timer t;
+  List<String> lapTime = [];
+  int _itemcount = 0;
 
   String returnFormattedText() {
     var milli = stopwatch.elapsed.inMilliseconds;
@@ -44,7 +44,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     stopwatch = Stopwatch();
 
@@ -94,33 +93,34 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
                 Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: Padding(
-                      padding: const EdgeInsets.all(30),
-                      child: ListView.builder(
-                          itemCount: 10,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                              leading: Text(
-                                '${index + 1}'.padLeft(2, "0"),
-                                style: const TextStyle(
-                                  color: Colors.blueAccent,
+                        padding: const EdgeInsets.all(30),
+                        child: ListView.builder(
+                            itemCount: _itemcount,
+                            itemBuilder: (BuildContext context, int index) {
+                              return ListTile(
+                                leading: Text(
+                                  '${index + 1}'.padLeft(2, "0"),
+                                  style: const TextStyle(
+                                    color: Colors.blueAccent,
+                                  ),
                                 ),
-                              ),
-                              trailing: const Text('something'),
-                            );
-                          }),
-                    )),
-                Expanded(
-                  flex: 1,
+                                trailing: Text(lapTime[index]),
+                              );
+                            }))),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 30),
                   child: Row(
                     children: [
                       Expanded(
                         child: _onPause
-                            ? GestureDetector(
-                                onTap: () {
+                            ? CupertinoButton(
+                                onPressed: () {
                                   stopwatch.reset();
                                   _onPause = false;
+                                  _itemcount = 0;
+                                  lapTime = [];
                                 },
                                 child: const Icon(
                                   CupertinoIcons.restart,
@@ -169,8 +169,11 @@ class _MyAppState extends State<MyApp> {
                       ),
                       Expanded(
                         child: _isStarted
-                            ? GestureDetector(
-                                onTap: () {},
+                            ? CupertinoButton(
+                                onPressed: () {
+                                  lapTime.add(returnFormattedText());
+                                  _itemcount++;
+                                },
                                 child: const Icon(
                                   CupertinoIcons.flag,
                                   color: Colors.black,
