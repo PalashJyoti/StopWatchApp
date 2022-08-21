@@ -9,6 +9,12 @@ void main() {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
       overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top]);
 
+  // fixed orientation
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   // for android statusbar dark shadow removal
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
