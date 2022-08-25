@@ -38,7 +38,6 @@ class _MyAppState extends State<MyApp> {
   late Stopwatch stopwatch;
   late Timer t;
   List<String> lapTime = [];
-  int _itemcount = 0;
 
   String returnFormattedText() {
     var milli = stopwatch.elapsed.inMilliseconds;
@@ -103,7 +102,7 @@ class _MyAppState extends State<MyApp> {
                     child: Padding(
                         padding: const EdgeInsets.all(30),
                         child: ListView.builder(
-                            itemCount: _itemcount,
+                            itemCount: lapTime.length,
                             itemBuilder: (BuildContext context, int index) {
                               return ListTile(
                                 leading: Text(
@@ -125,7 +124,6 @@ class _MyAppState extends State<MyApp> {
                                 onPressed: () {
                                   stopwatch.reset();
                                   _onPause = false;
-                                  _itemcount = 0;
                                   lapTime = [];
                                 },
                                 child: const Icon(
@@ -178,7 +176,6 @@ class _MyAppState extends State<MyApp> {
                             ? CupertinoButton(
                                 onPressed: () {
                                   lapTime.add(returnFormattedText());
-                                  _itemcount++;
                                 },
                                 child: const Icon(
                                   CupertinoIcons.flag,
